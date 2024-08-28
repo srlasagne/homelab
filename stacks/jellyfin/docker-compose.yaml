@@ -1,0 +1,23 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="Europe/Madrid"
+    volumes:
+      - ./config:/config
+      - ./series:/data/tvshows
+      - ./movies:/data/movies
+    devices:
+      - /dev/dri:/dev/dri
+    ports:
+      - 127.0.0.1:8096:8096
+    networks:
+      - nginxpm
+    restart: unless-stopped
+networks:
+  nginxpm:
+    name: nginxpm
+    external: true
